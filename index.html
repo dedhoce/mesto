@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./page/index.css">
+</head>
+<body class="root">
+<div class="content">
+<header class="header">
+    <div class="logo logo_place_header"></div>
+</header>
+<main>
+    <section class="profile">
+        <div class="profile__block">
+            <img src="./images/image.jpg" alt="Жак ив кусто в кадре на переднем плане в красной шапке на фоне волны" class="profile__avatar">
+            <div class="profile__info">
+                <div class="profile__position-name-button">
+                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <div class="profile__edit-button"></div>
+                </div>
+                <p class="profile__subname">Исследователь океана</p>
+          </div>
+        </div>
+        <div class="profile__add-button"></div>
+    </section>
+    <section>
+        <ul class="elements">
+            <li class="element">
+                <img src="./images/Karachaevsk_ruini.png" alt="Руины старой часовни на холме, хорошо сохранились" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Карачаевск</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+            <li class="element">
+                <img src="./images/Gora_El'brus.png" alt="В дали виднеется гора в дымке заката" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+            <li class="element">
+                <img src="./images/Dombay.png" alt="Высокий острый пик заснеженной горы, по склону редко растут ели" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Домбай</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+            <li class="element">
+                <img src="./images//Gora_El'brus.png" alt="В дали виднеется гора в дымке заката" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Гора Эльбрус</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+            <li class="element">
+                <img src="./images/Dombay.png" alt="Высокий острый пик заснеженной горы, по склону редко растут ели" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Домбай</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+            <li class="element">
+                <img src="./images/Karachaevsk_ruini.png" alt="Руины старой часовни на холме, хорошо сохранилась" class="element__mask-group">
+                <div class="element__block-title">
+                    <h2 class="element__title">Карачаево-Черкессия</h2>
+                    <div class="element__group"></div>
+                </div>
+            </li>
+        </ul>        
+    </section>    
+</main>
+<footer class="footer">
+    <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+</footer>
+<div class="popup popup_edit_profile">    
+    <div class="popup__form">
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <button type="button" name="popup__button" class="popup__button-close">
+            <span class="popup__close-icon"></span>
+        </button>
+        <input type="text" class="popup__text popup_profile-name" value="">
+        <input type="text" class="popup__text popup_profile-subname" value="">
+        <button type="submit" name="popup__button-save" class="popup__button-save">
+            <span class="popup__save-text">Сохранить</span>
+        </button>
+    </div>
+</div>
+</div>
+<script src="./scripts/scripts.js"></script>
+</body>
+</html>
