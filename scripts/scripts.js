@@ -12,8 +12,8 @@ popupButtonClose.addEventListener('click', togglePopup)
 function profileEditForm () {
 const profileName = document.querySelector('.profile__name');
 const profileSubname = document.querySelector('.profile__subname');
-const popupProfileName = document.querySelector('.popup_profile-name');
-const popupProfileSubname = document.querySelector('.popup_profile-subname');
+const popupProfileName = document.querySelector('.popup__text_profile-name');
+const popupProfileSubname = document.querySelector('.popup__text_profile-subname');
 
     popupProfileName.value = profileName.textContent;
     popupProfileSubname.value = profileSubname.textContent;   
@@ -27,8 +27,8 @@ function formSubmitHandler(evt) {
 
     const profileName = document.querySelector('.profile__name');
     const profileSubname = document.querySelector('.profile__subname');
-    const popupProfileName = document.querySelector('.popup_profile-name');
-    const popupProfileSubname = document.querySelector('.popup_profile-subname');    
+    const popupProfileName = document.querySelector('.popup__text_profile-name');
+    const popupProfileSubname = document.querySelector('.popup__text_profile-subname');    
 
     profileName.textContent = popupProfileName.value;
     profileSubname.textContent = popupProfileSubname.value;
