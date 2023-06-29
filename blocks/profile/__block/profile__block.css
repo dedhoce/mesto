@@ -3,6 +3,7 @@
   flex-direction: row;
   gap: 30px;
   align-items: center;
+  max-width: 56%;
 }
 @media screen and (min-width: 320px) and (max-width: 768px) {
   .profile__block {

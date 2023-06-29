@@ -5,7 +5,7 @@ const profileName = document.querySelector('.profile__name')
 const profileSubname = document.querySelector('.profile__subname')
 const popupProfileName = popupEditProfile.querySelector('.popup__text_type_name')
 const popupProfileSubname = popupEditProfile.querySelector('.popup__text_type_subname')
-const formEditProfile = popupEditProfile.querySelector('.form-edit-profile')
+const formEditProfile = popupEditProfile.querySelector('.popup__form-edit-profile')
 
 const elementGroup = document.querySelectorAll('.element__group')
     
