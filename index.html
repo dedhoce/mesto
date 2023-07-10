@@ -30,69 +30,7 @@
           <button type="button" class="profile__add-button"></button>
         </section>
         <section>
-          <ul class="elements">
-            <li class="element">
-              <img
-                src="./images/Karachaevsk_ruini.png"
-                alt="Руины старой часовни на холме, хорошо сохранились"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Карачаевск</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-              <button type="button" class="element__trash"></button>
-            </li>
-            <li class="element">
-              <img
-                src="./images/Gora_El'brus.png"
-                alt="В дали виднеется гора в дымке заката"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-            </li>
-            <li class="element">
-              <img
-                src="./images/Dombay.png"
-                alt="Высокий острый пик заснеженной горы, по склону редко растут ели"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Домбай</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-            </li>
-            <li class="element">
-              <img
-                src="./images//Gora_El'brus.png"
-                alt="В дали виднеется гора в дымке заката"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Гора Эльбрус</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-            </li>
-            <li class="element">
-              <img
-                src="./images/Dombay.png"
-                alt="Высокий острый пик заснеженной горы, по склону редко растут ели"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Домбай</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-            </li>
-            <li class="element">
-              <img
-                src="./images/Karachaevsk_ruini.png"
-                alt="Руины старой часовни на холме, хорошо сохранилась"
-                class="element__mask-group">
-              <div class="element__block-title">
-                <h2 class="element__title">Карачаево-Черкессия</h2>
-                <button type="button" class="element__group"></button>
-              </div>
-            </li>
-          </ul>
+          <ul class="elements"></ul>
         </section>
       </main>
       <footer class="footer">
@@ -145,8 +83,20 @@
               class="popup__button-save">Создать</button>
           </form>
       </div>
-
     </div>
+    <template id="elements-item-template" class="elements">
+      <li class="element">
+        <img
+          src=""
+          alt=""
+          class="element__mask-group">
+        <div class="element__block-title">
+          <h2 class="element__title"></h2>
+          <button type="button" class="element__group"></button>
+        </div>
+        <button type="button" class="element__trash"></button>
+      </li>            
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

@@ -90,3 +90,23 @@ function formSubmitCards(evt) {
 
 formAddCards.addEventListener('submit', formSubmitCards);
 
+const container = document.querySelector('.elements')
+const template = document.querySelector('#elements-item-template').content
+
+ 
+
+ 
+initialCards.forEach((elementName) => {
+    const element = template.querySelector('.element').cloneNode(true);
+
+    element.querySelector('.element__title').textContent = elementName.name;
+    element.querySelector('.element__mask-group').src = elementName.link;
+    element.querySelector('.element__group').addEventListener('click', function(evt) {
+        evt.target.classList.toggle('element__group_status_active')
+    })
+    
+    container.append(element)  
+ });
+ 
+ 
+ 
