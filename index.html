@@ -40,6 +40,7 @@
                 <h2 class="element__title">Карачаевск</h2>
                 <button type="button" class="element__group"></button>
               </div>
+              <button type="button" class="element__trash"></button>
             </li>
             <li class="element">
               <img
@@ -105,7 +106,7 @@
             name="popup__button"
             class="popup__button-close">
           </button>
-          <form action="./scripts/index.js" name="formEditProfile" class="popup__form-edit-profile">
+          <form action="./scripts/index.js" name="formEditProfile" class="popup__form-input popup__form-edit-profile">
             <input
               type="text"
               name="name"
@@ -121,6 +122,30 @@
           </form>
         </div>
       </div>
+      <div class="popup popup_add_cards">
+        <div class="popup__form">
+          <h2 class="popup__title">Новое место</h2>
+          <button
+            type="button"
+            name="popup__button"
+            class="popup__button-close popup__button-close_window-add">
+          </button>
+          <form action="./scripts/index.js" name="formAddCards" class="popup__form-input popup__form-add-cards">
+            <input
+              type="text"
+              name="name"
+              class="popup__text popup__text_type_title">
+            <input
+              type="url"
+              name="url"
+              class="popup__text popup__text_type_url">
+            <button
+              type="submit"
+              name="popup__button-save"
+              class="popup__button-save">Создать</button>
+          </form>
+      </div>
+
     </div>
     <script src="./scripts/index.js"></script>
   </body>
