@@ -29,7 +29,7 @@
           </div>
           <button type="button" class="profile__add-button"></button>
         </section>
-        <section>
+        <section aria-label="elements">
           <ul class="elements"></ul>
         </section>
       </main>
@@ -66,7 +66,7 @@
           <button
             type="button"
             name="popup__button"
-            class="popup__button-close popup__button-close_window-add">
+            class="popup__button-close">
           </button>
           <form action="./scripts/index.js" name="formAddCards" class="popup__form-input popup__form-add-cards">
             <input
@@ -82,9 +82,20 @@
               name="popup__button-save"
               class="popup__button-save">Создать</button>
           </form>
+       </div>
       </div>
-    </div>
-    <template id="elements-item-template" class="elements">
+      <div class="popup popup_overlay_dark popup_zoom_image">
+        <div class="popup__group">
+          <button
+            type="button"
+            name="popup__button"
+            class="popup__button-close">
+          </button>
+          <img src="#" alt="" class="popup__zoom-image">
+          <p class="popup__caption"></p>
+        </div>
+      </div>
+      <template id="elements-item-template" class="elements">
       <li class="element">
         <img
           src=""
@@ -96,7 +107,8 @@
         </div>
         <button type="button" class="element__trash"></button>
       </li>            
-    </template>
+      </template>
+    </div>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

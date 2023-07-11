@@ -1,6 +1,6 @@
 .element__mask-group {
   width: 100%;
-  max-width: 282px;
   max-height: 282px;
+  height: 100%;
   object-fit: cover;
 }
