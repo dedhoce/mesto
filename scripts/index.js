@@ -24,12 +24,12 @@ function openPopup (popup) {
   popup.classList.add("popup_status_active");
 };
 
-function removePopup (popup) {
+function closePopup (popup) {
   popup.classList.remove("popup_status_active");
 };
 
 function togglePopaps(event) {
-  let eventTargetMatches = cl => event.target.matches(cl);
+  const eventTargetMatches = cl => event.target.matches(cl);
   switch (eventTargetMatches() === false) {
   case eventTargetMatches(".profile__edit-button"):
     inputNameFormPopupProfile.value = profileName.textContent;
@@ -40,19 +40,19 @@ function togglePopaps(event) {
     openPopup (popupAddCard);
     break;
   case eventTargetMatches(".popup_edit_profile .popup__button-close"):
-    removePopup (popupEditProfile);
+    closePopup (popupEditProfile);
     break;
   case eventTargetMatches(".popup_add_cards .popup__button-close"):
-    removePopup (popupAddCard);
+    closePopup (popupAddCard);
     break;
   case eventTargetMatches(".popup_zoom_image .popup__button-close"):
-    removePopup (popupZoomImage);
+    closePopup (popupZoomImage);
   }
 }
 
 function closePopupSubmit() {
   popupList.forEach((popupType) => {
-    removePopup (popupType);
+    closePopup (popupType);
   });
 }
 
@@ -69,7 +69,7 @@ function handleLikeClick(type) {
   type.querySelector(".element__group").classList.toggle("element__group_status_active")
 }
 const createCard = (text, src) => {
-  let element = template.querySelector(".element").cloneNode(true);
+  const element = template.querySelector(".element").cloneNode(true);
 
   element.querySelector(".element__title").textContent = text;
   element.querySelector(".element__mask-group").alt = text;
