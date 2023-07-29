@@ -50,8 +50,8 @@ const setEventListeners = (form, config) => {
 };
 
 function enableValidation (config) {  
-  const forms = Array.from(document.querySelectorAll(config.formSelector));
+  const forms = Array.from(document.querySelectorAll(config.formSelector));  
   forms.forEach((form) => {
-    setEventListeners(form, config);
-  });  
-};
+    setEventListeners(form, config);    
+  })  
+}

@@ -23,6 +23,8 @@ const template = document.querySelector("#elements-item-template").content;
 // включение валидации вызовом enableValidation
 // все настройки передаются при вызове
 const validationConfig = {
+  popupSelector: '.popup',
+  popupActiveSelector: 'popup_status_active',
   formSelector: '.popup__form-input',
   inputSelector: '.popup__text',
   submitButtonSelector: '.popup__button-save',
@@ -31,32 +33,48 @@ const validationConfig = {
   errorClass: 'popup__text-error_active'
 }
 
+const pushEscForClosePopup = (evt) => {    
+  if (evt.code === "Escape") {
+    popupList.forEach(popup => closePopup(popup))    
+  }
+}
+
 function openPopup (popup) {
-  popup.classList.add("popup_status_active");
-  closePopupAlternative();
+  popup.classList.add("popup_status_active"); 
+  document.addEventListener('keydown', pushEscForClosePopup); 
 };
 
 function closePopup (popup) {
   popup.classList.remove("popup_status_active");
-  popup.querySelectorAll('.popup__text').forEach((input) => {
-    input.value = "";
-    input.classList.remove('popup__text_type_error')
-  });
-  popup.querySelectorAll('.popup__text-error').forEach((error) => 
-  error.classList.remove('popup__text-error_active'));  
+  document.removeEventListener('keydown', pushEscForClosePopup);
+  const form = popup.querySelector(validationConfig.formSelector);
+  const inputs = form.querySelectorAll(validationConfig.inputSelector)
+  inputs.forEach((input) => {
+    input.value = '';
+    hideInputError(form, input, validationConfig)
+  });    
 };
 
-function togglePopaps(event) {
+function renameAuto() {
+  inputNameFormPopupProfile.value = profileName.textContent;
+  inputSubameFormPopupProfile.value = profileSubname.textContent;
+}
+
+function openPopupOnClick(event) {
   const eventTargetMatches = cl => event.target.matches(cl);  
   switch (eventTargetMatches() === false) {
   case eventTargetMatches(".profile__edit-button"):
-    inputNameFormPopupProfile.value = profileName.textContent;
-    inputSubameFormPopupProfile.value = profileSubname.textContent;
+    renameAuto();
     openPopup (popupEditProfile);
     break;
   case eventTargetMatches(".profile__add-button"):
-    openPopup (popupAddCard);
-    break;
+    openPopup (popupAddCard);     
+  }
+}
+
+function closePopupOnClick(event) {
+  const eventTargetMatches = cl => event.target.matches(cl);  
+  switch (eventTargetMatches() === false) {  
   case eventTargetMatches(".popup_edit_profile .popup__button-close"):
     closePopup (popupEditProfile);
     break;
@@ -69,23 +87,24 @@ function togglePopaps(event) {
 }
 
 function closePopupSubmit() {  
-  popupList.forEach((popupType) => {
-    closePopup (popupType);
+  popupList.forEach((popup) => {
+    if (popup.classList.contains('popup_status_active')) {
+      closePopup (popup);
+    }
   });
 }
 
 function handleFormPopupProfile(evt) {
   evt.preventDefault();
-
   profileName.textContent = `${inputNameFormPopupProfile.value}`;
   profileSubname.textContent = `${inputSubameFormPopupProfile.value}`;
-
   closePopupSubmit();
 }
 
 function handleLikeClick(type) {
   type.querySelector(".element__group").classList.toggle("element__group_status_active")
 }
+
 const createCard = (text, src) => {
   const element = template.querySelector(".element").cloneNode(true);
 
@@ -106,6 +125,7 @@ const createCard = (text, src) => {
   });
   return element;
 }
+
 initialCards.forEach((item) => {
   const name = item.name;
   const link = item.link;
@@ -116,45 +136,33 @@ function handleFormPopupCard(evt) {
   evt.preventDefault();
   const url = `${inputUrlFormPopupCard.value}`;
   const title = `${inputTitleFormPopupCard.value}`;
-  if (title && url) {
-    container.prepend(createCard(title, url));
-    inputTitleFormPopupCard.value = '';
-    inputUrlFormPopupCard.value = '';
-    closePopupSubmit();
-  } 
+  container.prepend(createCard(title, url));
+  inputTitleFormPopupCard.value = '';
+  inputUrlFormPopupCard.value = '';
+  closePopupSubmit();   
 }
 
-buttonOpenPopupProfileEdit.addEventListener("click", togglePopaps);
-buttonOpenPopupAddCard.addEventListener("click", togglePopaps);
+buttonOpenPopupProfileEdit.addEventListener("click", openPopupOnClick);
+buttonOpenPopupAddCard.addEventListener("click", openPopupOnClick);
 
 buttonClosePopupList.forEach((btn) => {
-  btn.addEventListener("click", togglePopaps);
+  btn.addEventListener("click", closePopupOnClick);
 });
-
-const closePopupAlternative = () => {
-  popupList.forEach((popup) => {  
-    if (popup.classList.contains('popup_status_active')) {
-      popup.addEventListener('click', (evt) => {   
-        if (evt.target === popup) {
-          closePopup(popup);
-        }
-      });  
-      document.addEventListener('keydown', (evt) => {    
-        if (evt.code === "Escape" && popup.classList.contains('popup_status_active')) {
-        closePopup(popup);
-        }
-      });  
-    };
-  });
-}  
 
 formPopupEditProfile.addEventListener("submit", handleFormPopupProfile);
 
 formPopupAddCard.addEventListener("submit", handleFormPopupCard);
 
-
+popupList.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {   
+    if (evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+}) 
 
 enableValidation(validationConfig);
+
 
 
 
