@@ -26,13 +26,14 @@ const validationConfig = {
   formSelector: '.popup__form-input',
   inputSelector: '.popup__text',
   submitButtonSelector: '.popup__button-save',
-  inactiveButtonClass: '.popup__button-save_inactive',
-  inputErrorClass: '.popup__text_type_error',
-  errorClass: '.popupp__text-error_active'
+  inactiveButtonClass: 'popup__button-save_inactive',
+  inputErrorClass: 'popup__text_type_error',
+  errorClass: 'popup__text-error_active'
 }
 
 function openPopup (popup) {
   popup.classList.add("popup_status_active");
+  closePopupAlternative();
 };
 
 function closePopup (popup) {
@@ -130,19 +131,22 @@ buttonClosePopupList.forEach((btn) => {
   btn.addEventListener("click", togglePopaps);
 });
 
-
-popupList.forEach((popup) => {  
-  popup.addEventListener('click', (evt) => {   
-    if (evt.target === popup) {
-      closePopup(popup)
-    }
-  });  
-  document.addEventListener('keydown', (evt) => {    
-    if (evt.code === "Escape" && popup.classList.contains('popup_status_active')) {
-    closePopup(popup);
-    }
-  })  
-});  
+const closePopupAlternative = () => {
+  popupList.forEach((popup) => {  
+    if (popup.classList.contains('popup_status_active')) {
+      popup.addEventListener('click', (evt) => {   
+        if (evt.target === popup) {
+          closePopup(popup);
+        }
+      });  
+      document.addEventListener('keydown', (evt) => {    
+        if (evt.code === "Escape" && popup.classList.contains('popup_status_active')) {
+        closePopup(popup);
+        }
+      });  
+    };
+  });
+}  
 
 formPopupEditProfile.addEventListener("submit", handleFormPopupProfile);
 
