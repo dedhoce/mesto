@@ -31,13 +31,17 @@ const validationConfig = {
   inactiveButtonClass: 'popup__button-save_inactive',
   inputErrorClass: 'popup__text_type_error',
   errorClass: 'popup__text-error_active'
-}
+};
 
 const pushEscForClosePopup = (evt) => {    
   if (evt.code === "Escape") {
-    popupList.forEach(popup => closePopup(popup))    
-  }
-}
+    popupList.forEach(popup => {
+      if (popup.classList.contains("popup_status_active")) {
+        closePopup(popup)
+      };
+    });  
+  };
+};
 
 function openPopup (popup) {
   popup.classList.add("popup_status_active"); 
@@ -47,13 +51,16 @@ function openPopup (popup) {
 function closePopup (popup) {
   popup.classList.remove("popup_status_active");
   document.removeEventListener('keydown', pushEscForClosePopup);
-  const form = popup.querySelector(validationConfig.formSelector);
-  const inputs = form.querySelectorAll(validationConfig.inputSelector)
-  inputs.forEach((input) => {
-    input.value = '';
-    hideInputError(form, input, validationConfig)
-  });    
+  clearFormWhenClosePopup(popup, validationConfig)    
 };
+
+function closePopupSubmit() {  
+  popupList.forEach((popup) => {
+    if (popup.classList.contains('popup_status_active')) {
+      closePopup (popup);
+    }
+  });
+}
 
 function renameAuto() {
   inputNameFormPopupProfile.value = profileName.textContent;
@@ -84,14 +91,6 @@ function closePopupOnClick(event) {
   case eventTargetMatches(".popup_zoom_image .popup__button-close"):
     closePopup (popupZoomImage);    
   }
-}
-
-function closePopupSubmit() {  
-  popupList.forEach((popup) => {
-    if (popup.classList.contains('popup_status_active')) {
-      closePopup (popup);
-    }
-  });
 }
 
 function handleFormPopupProfile(evt) {
@@ -136,10 +135,9 @@ function handleFormPopupCard(evt) {
   evt.preventDefault();
   const url = `${inputUrlFormPopupCard.value}`;
   const title = `${inputTitleFormPopupCard.value}`;
-  container.prepend(createCard(title, url));
-  inputTitleFormPopupCard.value = '';
-  inputUrlFormPopupCard.value = '';
-  closePopupSubmit();   
+  container.prepend(createCard(title, url));  
+  closePopupSubmit();
+  clearAndInactiveButton(validationConfig);   
 }
 
 buttonOpenPopupProfileEdit.addEventListener("click", openPopupOnClick);

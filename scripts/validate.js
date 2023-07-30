@@ -2,9 +2,8 @@ const showInputError = (form, input, config) => {
   input.classList.add(config.inputErrorClass);
   const span = form.querySelector(`.${input.id}-error`);
   span.textContent = input.validationMessage;
-  span.classList.add(config.errorClass);
-  console.log(config.errorClass)
-};          
+  span.classList.add(config.errorClass);  
+};
 
 const hideInputError = (form, input, config) => {
   input.classList.remove(config.inputErrorClass);
@@ -16,7 +15,7 @@ const hideInputError = (form, input, config) => {
 const hasInvalidValue = (inputs) => {
   return inputs.some((input) => {
     return !input.validity.valid;
-  })    
+  });
 };
 
 const isValid = (form, input, config) => {
@@ -49,9 +48,32 @@ const setEventListeners = (form, config) => {
   });
 };
 
-function enableValidation (config) {  
-  const forms = Array.from(document.querySelectorAll(config.formSelector));  
+function enableValidation(config) {
+  const forms = Array.from(document.querySelectorAll(config.formSelector));
   forms.forEach((form) => {
-    setEventListeners(form, config);    
-  })  
+    setEventListeners(form, config);
+  });
 }
+
+function clearFormWhenClosePopup(popup, config) {
+  const form = popup.querySelector(config.formSelector);
+  if (popup.contains(form)) {
+    const inputs = form.querySelectorAll(config.inputSelector);
+    inputs.forEach((input) => {
+      input.value = "";
+      hideInputError(form, input, config);
+      const inputs = Array.from(popup.querySelectorAll(config.inputSelector));
+      const button = popup.querySelector(config.submitButtonSelector);
+      toggleButtonState(inputs, button, config);
+    });
+  }
+}
+
+function clearAndInactiveButton(config) {
+  const popupList = document.querySelectorAll(config.popupSelector);
+  popupList.forEach((popup) => {
+    clearFormWhenClosePopup(popup, config);
+  });
+}
+//inputTitleFormPopupCard.value = '';
+//inputUrlFormPopupCard.value = '';
