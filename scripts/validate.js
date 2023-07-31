@@ -55,25 +55,21 @@ function enableValidation(config) {
   });
 }
 
-function clearFormWhenClosePopup(popup, config) {
-  const form = popup.querySelector(config.formSelector);
-  if (popup.contains(form)) {
-    const inputs = form.querySelectorAll(config.inputSelector);
-    inputs.forEach((input) => {
-      input.value = "";
-      hideInputError(form, input, config);
-      const inputs = Array.from(popup.querySelectorAll(config.inputSelector));
-      const button = popup.querySelector(config.submitButtonSelector);
-      toggleButtonState(inputs, button, config);
-    });
-  }
-}
-
-function clearAndInactiveButton(config) {
-  const popupList = document.querySelectorAll(config.popupSelector);
-  popupList.forEach((popup) => {
-    clearFormWhenClosePopup(popup, config);
+function clearFormWhenClosePopup(popup, config) {  
+  let form = popup.querySelector(config.formSelector);  
+  form.reset();  
+  const button = popup.querySelector(config.submitButtonSelector);
+  const inputs = Array.from(popup.querySelectorAll(config.inputSelector));
+  toggleButtonState(inputs, button, config);
+  inputs.forEach((input) => {    
+    hideInputError(form, input, config);    
   });
 }
-//inputTitleFormPopupCard.value = '';
-//inputUrlFormPopupCard.value = '';
+
+function formReset (config) {
+  const popupOpened = document.querySelector('.popup_status_active');
+  const form = popupOpened.querySelector(config.formSelector);
+  if (popupOpened.contains(form)) {
+    clearFormWhenClosePopup(popupOpened, config);
+  }  
+}

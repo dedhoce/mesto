@@ -33,34 +33,39 @@ const validationConfig = {
   errorClass: 'popup__text-error_active'
 };
 
-const pushEscForClosePopup = (evt) => {    
-  if (evt.code === "Escape") {
-    popupList.forEach(popup => {
-      if (popup.classList.contains("popup_status_active")) {
-        closePopup(popup)
-      };
-    });  
-  };
-};
+
+
 
 function openPopup (popup) {
   popup.classList.add("popup_status_active"); 
-  document.addEventListener('keydown', pushEscForClosePopup); 
+  document.addEventListener('keydown', closePopupByEsc); 
 };
 
-function closePopup (popup) {
+function closePopup (popup) {  
   popup.classList.remove("popup_status_active");
-  document.removeEventListener('keydown', pushEscForClosePopup);
-  clearFormWhenClosePopup(popup, validationConfig)    
+  document.removeEventListener('keydown', closePopupByEsc);      
 };
 
-function closePopupSubmit() {  
-  popupList.forEach((popup) => {
-    if (popup.classList.contains('popup_status_active')) {
-      closePopup (popup);
+function closePopupSubmit() {   
+  const popupOpened = document.querySelector('.popup_status_active');   
+  closePopup(popupOpened);
+}
+
+const closePopupByEsc = (evt) => {    
+  if (evt.code === "Escape") {
+    formReset(validationConfig);
+    closePopupSubmit();           
+  };
+};
+
+popupList.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {   
+    if (evt.target === popup) {
+      clearFormWhenClosePopup(popup, validationConfig);
+      closePopup(popup);        
     }
   });
-}
+})
 
 function renameAuto() {
   inputNameFormPopupProfile.value = profileName.textContent;
@@ -83,10 +88,12 @@ function closePopupOnClick(event) {
   const eventTargetMatches = cl => event.target.matches(cl);  
   switch (eventTargetMatches() === false) {  
   case eventTargetMatches(".popup_edit_profile .popup__button-close"):
+    clearFormWhenClosePopup(popupEditProfile, validationConfig);  
     closePopup (popupEditProfile);
     break;
   case eventTargetMatches(".popup_add_cards .popup__button-close"):
-    closePopup (popupAddCard);
+    clearFormWhenClosePopup(popupAddCard, validationConfig);  
+    closePopup (popupAddCard);    
     break;
   case eventTargetMatches(".popup_zoom_image .popup__button-close"):
     closePopup (popupZoomImage);    
@@ -135,9 +142,9 @@ function handleFormPopupCard(evt) {
   evt.preventDefault();
   const url = `${inputUrlFormPopupCard.value}`;
   const title = `${inputTitleFormPopupCard.value}`;
-  container.prepend(createCard(title, url));  
-  closePopupSubmit();
-  clearAndInactiveButton(validationConfig);   
+  container.prepend(createCard(title, url)); 
+  formReset(validationConfig);
+  closePopupSubmit();   
 }
 
 buttonOpenPopupProfileEdit.addEventListener("click", openPopupOnClick);
@@ -149,15 +156,7 @@ buttonClosePopupList.forEach((btn) => {
 
 formPopupEditProfile.addEventListener("submit", handleFormPopupProfile);
 
-formPopupAddCard.addEventListener("submit", handleFormPopupCard);
-
-popupList.forEach((popup) => {
-  popup.addEventListener('click', (evt) => {   
-    if (evt.target === popup) {
-      closePopup(popup);
-    }
-  });
-}) 
+formPopupAddCard.addEventListener("submit", handleFormPopupCard); 
 
 enableValidation(validationConfig);
 
