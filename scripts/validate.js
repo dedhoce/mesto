@@ -55,21 +55,12 @@ function enableValidation(config) {
   });
 }
 
-function clearFormWhenClosePopup(popup, config) {  
-  let form = popup.querySelector(config.formSelector);  
-  form.reset();  
+function clearingForm(popup, config) {    
   const button = popup.querySelector(config.submitButtonSelector);
   const inputs = Array.from(popup.querySelectorAll(config.inputSelector));
   toggleButtonState(inputs, button, config);
-  inputs.forEach((input) => {    
+  inputs.forEach((input) => {
+    const form = popup.querySelector(config.formSelector);    
     hideInputError(form, input, config);    
   });
-}
-
-function formReset (config) {
-  const popupOpened = document.querySelector('.popup_status_active');
-  const form = popupOpened.querySelector(config.formSelector);
-  if (popupOpened.contains(form)) {
-    clearFormWhenClosePopup(popupOpened, config);
-  }  
 }
