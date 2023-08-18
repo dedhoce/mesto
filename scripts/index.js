@@ -34,11 +34,10 @@ import {initialCards} from './cards.js'
 
 const enableValidation = (form) => {
   const formValidator = new FormValidator(form, validationConfig);
-  formValidator.setEventListeners();
-  //formValidator.clearingForm();
+  formValidator.setEventListeners();  
 }
 
-const openPopup = (popup) => {
+const openPopup = (popup) => {  
   popup.classList.add("popup_status_active");
   document.addEventListener("keydown", closePopupByEsc);
 };
@@ -48,9 +47,9 @@ const closePopup = (popup) => {
   document.removeEventListener("keydown", closePopupByEsc);
 };
 
-const closePopupByEsc = (evt) => {
-  const popupOpened = document.querySelector(".popup_status_active");
+const closePopupByEsc = (evt) => {  
   if (evt.code === "Escape") {
+    const popupOpened = document.querySelector(".popup_status_active");
     closePopup(popupOpened);
   }
 };
@@ -69,23 +68,14 @@ const renameAuto = () => {
 };
 
 const openPopupEditProfile = () => {
-  formPopupEditProfile.reset();
-  enableValidation(formPopupEditProfile);
+  formPopupEditProfile.reset();  
   renameAuto();
   openPopup(popupEditProfile);
 };
 
 const openPopupAddCard = () => {
-  formPopupAddCard.reset();
-  enableValidation(formPopupAddCard);  
+  formPopupAddCard.reset();    
   openPopup(popupAddCard);
-};
-
-const handleFormPopupProfile = (evt) => {
-  evt.preventDefault();
-  profileName.textContent = inputNameFormPopupProfile.value;
-  profileSubname.textContent = inputSubnameFormPopupProfile.value;
-  closePopup(popupEditProfile);
 };
 
 const itemsForCard = {      
@@ -109,6 +99,13 @@ initialCards.forEach((item) => {
   container.append(createCard(itemsForCard));
 });
 
+const handleFormPopupProfile = (evt) => {
+  evt.preventDefault();
+  profileName.textContent = inputNameFormPopupProfile.value;
+  profileSubname.textContent = inputSubnameFormPopupProfile.value;
+  closePopup(popupEditProfile);
+};
+
 const handleFormPopupCard = (evt) => {
   evt.preventDefault();
   itemsForCard.url = inputUrlFormPopupCard.value;
@@ -116,7 +113,7 @@ const handleFormPopupCard = (evt) => {
   
   container.prepend(createCard(itemsForCard));
 
-  formPopupAddCard.reset();
+  //formPopupAddCard.reset();
 
   closePopup(popupAddCard);
 };
@@ -131,3 +128,6 @@ buttonClosePopupList.forEach((btn) => {
 formPopupEditProfile.addEventListener("submit", handleFormPopupProfile);
 
 formPopupAddCard.addEventListener("submit", handleFormPopupCard);
+
+enableValidation(formPopupEditProfile);
+enableValidation(formPopupAddCard);
