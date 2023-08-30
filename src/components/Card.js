@@ -1,16 +1,13 @@
 export class Card {
   
-  constructor(itemsForCard
+  constructor(itemsForCard, handleCardClick
     ) {      
     this._template = document
       .querySelector(itemsForCard.templateSelector)
       .content;
     this._text = itemsForCard.text;
-    this._url = itemsForCard.url;
-    this._openPopup = itemsForCard.openPopup;
-    this._popupZoomImage = itemsForCard.popupZoomImage
-    this.captionPopupZoomImage = itemsForCard.captionPopupZoomImage 
-    this.imagePopupZoomImage = itemsForCard.imagePopupZoomImage      
+    this._url = itemsForCard.url;    
+    this._openPopupZoomImage = handleCardClick;    
   }
 
   _getTemplate() {
@@ -41,21 +38,10 @@ export class Card {
       this._handleLikeClick();
     })
 
-    this._openPopupZoomImage()
-  }
-
-  _openPopupZoomImage() {
-    this._element.querySelector(".element__mask-group").addEventListener("click", () => {
-      this._renameItemsAndOpenPopupZoomImage()
-    });
-  }
-
-  _renameItemsAndOpenPopupZoomImage() {
-    this.imagePopupZoomImage.src = this._url;
-    this.imagePopupZoomImage.alt = this._text;
-    this.captionPopupZoomImage.textContent = this._text;
-    this._openPopup(this._popupZoomImage);
-  }
+    this._element.querySelector(".element__mask-group").addEventListener("click", () => {     
+      this._openPopupZoomImage();
+    })    
+  }  
 
   _handleLikeClick() {
     this._element.querySelector(".element__group").classList.toggle("element__group_status_active");

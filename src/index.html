@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Mesto</title>
-    <link rel="stylesheet" href="./page/index.css">
+    
   </head>
   <body class="root">
     <div class="content">
@@ -16,7 +16,7 @@
         <section class="profile">
           <div class="profile__block">
             <img
-              src="./images/image.jpg"
+              src="<%=require('./images/image.jpg')%>"
               alt="Жак ив кусто в кадре на переднем плане в красной шапке на фоне волны"
               class="profile__avatar">
             <div class="profile__info">
@@ -131,9 +131,6 @@
       </li>            
       </template>
     </div>
-    <script type="module" src="./scripts/index.js"></script> 
-    <script type="module" src="./scripts/Card.js"></script>
-    <script type="module" src="./scripts/FormValidator.js"></script>  
-    <script type="module" src="./scripts/cards.js"></script>          
+              
   </body>
 </html>
