@@ -3,6 +3,12 @@ import PopupWithImage from './PopupWithImage.js';
 import { captionPopupZoomImage } from '../utils/constants.js';
 import { imagePopupZoomImage } from '../utils/constants.js';
 
+const popupWithImage = new PopupWithImage({
+    popupSelector: ".popup_zoom_image", 
+    imagePopupZoomImage, 
+    captionPopupZoomImage   
+})
+
 export default class Section {
     constructor({items, renderer, containerSelector}) {
         this._items = items;
@@ -19,15 +25,8 @@ export default class Section {
         itemsForCard.templateSelector = "#elements-item-template";
         const url = itemsForCard.url
         const text = itemsForCard.text
-        const card = new Card(itemsForCard, () =>{            
-            const popupWithImage = new PopupWithImage({
-                popupSelector: ".popup_zoom_image", 
-                imagePopupZoomImage, 
-                captionPopupZoomImage, 
-                url, 
-                text
-            })            
-            popupWithImage.open()
+        const card = new Card(itemsForCard, () =>{                         
+            popupWithImage.open(url, text)
             popupWithImage.setEventListener()                        
         })
         const cardElement = card.generateCard();
