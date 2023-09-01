@@ -4,13 +4,14 @@ export default class UserInfo {
         this._aboutMyself = document.querySelector(aboutMyselfSelector)
     }
 
-    getUserInfo(inputName, inputAboutMyself ) {
-        inputName.value = this._name.textContent;
-        inputAboutMyself.value = this._aboutMyself.textContent;
+    getUserInfo(data) {        
+        data.name = this._name.textContent;
+        data.aboutMyself = this._aboutMyself.textContent;
+        return data
     }
 
-    setUserInfo(inputName, inputAboutMyself) {
-        this._name.textContent = inputName.value;
-        this._aboutMyself.textContent = inputAboutMyself.value;
+    setUserInfo(data) {
+        this._name.textContent = data.name;
+        this._aboutMyself.textContent = data.aboutMyself;
     }
 }

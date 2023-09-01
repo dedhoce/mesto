@@ -1,12 +1,12 @@
 export class Card {
   
-  constructor(itemsForCard, handleCardClick
+  constructor(data, handleCardClick
     ) {      
     this._template = document
-      .querySelector(itemsForCard.templateSelector)
+      .querySelector(data.templateSelector)
       .content;
-    this._text = itemsForCard.text;
-    this._url = itemsForCard.url;    
+    this._text = data.text;
+    this._url = data.url;    
     this._openPopupZoomImage = handleCardClick;    
   }
 

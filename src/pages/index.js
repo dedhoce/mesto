@@ -1,12 +1,16 @@
 import '../page/index.css';
-import { buttonOpenPopupProfileEdit } from '../utils/constants.js';
-import { inputNameFormPopupProfile } from '../utils/constants.js';
-import { inputSubnameFormPopupProfile } from '../utils/constants.js';
-import { formPopupEditProfile } from '../utils/constants.js';
-import { inputTitleFormPopupCard } from '../utils/constants.js';
-import { inputUrlFormPopupCard } from '../utils/constants.js';
-import { buttonOpenPopupAddCard } from '../utils/constants.js';
-import { formPopupAddCard } from '../utils/constants.js';
+import { 
+   buttonOpenPopupProfileEdit,
+   inputNameFormPopupProfile,
+   inputSubnameFormPopupProfile,
+   formPopupEditProfile,
+   inputTitleFormPopupCard,
+   inputUrlFormPopupCard,
+   buttonOpenPopupAddCard, 
+   formPopupAddCard,
+   captionPopupZoomImage,
+   imagePopupZoomImage
+  } from '../utils/constants.js';
 
 import { validationConfig } from '../utils/constants.js';
 import {initialCards} from '../utils/cards.js';
@@ -15,14 +19,27 @@ import {FormValidator} from '../components/FormValidator.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Section from '../components/Section.js';
+import { Card } from '../components/Card.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+
+const popupWithImage = new PopupWithImage({
+  popupSelector: ".popup_zoom_image", 
+  imagePopupZoomImage, 
+  captionPopupZoomImage   
+})
 
 const section = new Section({
   items: initialCards,
-  renderer: () => {
-    const itemsForCard = {}
-    itemsForCard.url = inputUrlFormPopupCard.value;
-    itemsForCard.text = inputTitleFormPopupCard.value;     
-    return itemsForCard    
+  renderer: (data) => {    
+    const url = data.url;
+    const text = data.text;
+    const card = new Card(data, () => {                         
+      popupWithImage.open(url, text)
+      popupWithImage.setEventListener()                        
+    })
+      const cardElement = card.generateCard();
+        
+      return cardElement    
   },
   containerSelector: ".elements"
 })
@@ -34,9 +51,10 @@ const enableValidation = (form) => {
 
 const popupEditProfile = new PopupWithForm({
   popupSelector : '.popup_edit_profile', 
-  submit: () => {                     
-      userInfo.setUserInfo(inputNameFormPopupProfile, inputSubnameFormPopupProfile)                
-}})
+  submit: (data) => {
+    userInfo.setUserInfo(data.name, data.description)
+  }
+})
 
 const popupAddCard = new PopupWithForm({
   popupSelector : '.popup_add_cards', 
@@ -50,7 +68,8 @@ const userInfo = new UserInfo({
 })
 
 const openPopupEditProfile = () => {  
-  formPopupEditProfile.reset();  
+  formPopupEditProfile.reset();
+    
   userInfo.getUserInfo(inputNameFormPopupProfile, inputSubnameFormPopupProfile);
   popupEditProfile.open();  
 }
