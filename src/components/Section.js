@@ -2,7 +2,8 @@ export default class Section {
     constructor({items, renderer, containerSelector}) {
         this._items = items;
         this._renderer = renderer;
-        this._container = document.querySelector(containerSelector);        
+        this._container = document.querySelector(containerSelector);
+        this._object = true        
     }
     
     render() { 
@@ -11,13 +12,16 @@ export default class Section {
         this._items.forEach((item) => {
             itemsForCard.text = item.name;
             itemsForCard.url = item.link;
-            console.log(this._renderer(itemsForCard))
-        })        
+            const object = true                                   
+            this.addItem(object, this._renderer(itemsForCard))           
+        })                
     }    
 
-    addItem() {
-                         
-        //this._container.prepend();
-        this._container.append(this.render());
+    addItem(object, data) {                                                      
+        if(object) {                                  
+            this._container.append(data)
+        } else if(!object) {
+            this._container.prepend(this._renderer(data))
+        }
     }
 }

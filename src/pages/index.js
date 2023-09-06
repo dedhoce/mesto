@@ -52,14 +52,26 @@ const enableValidation = (form) => {
 const popupEditProfile = new PopupWithForm({
   popupSelector : '.popup_edit_profile', 
   submit: (data) => {
-    userInfo.setUserInfo(data.name, data.description)
-  }
+    console.log(data[inputNameFormPopupProfile.name])
+    console.log(data[inputSubnameFormPopupProfile.name])
+    const dataUserInfo = {}
+    dataUserInfo.name = data[inputNameFormPopupProfile.name]
+    dataUserInfo.aboutMyself = data[inputSubnameFormPopupProfile.name]    
+    userInfo.setUserInfo(dataUserInfo)    
+  }  
 })
 
 const popupAddCard = new PopupWithForm({
   popupSelector : '.popup_add_cards', 
-  submit: () => {                  
-    section.render()          
+  submit: (data) => {
+    console.log(data[inputTitleFormPopupCard.name])
+    console.log(data[inputUrlFormPopupCard.name])
+    const dataCards = {}
+    dataCards.templateSelector = "#elements-item-template";
+    dataCards.text = data[inputTitleFormPopupCard.name]
+    dataCards.url = data[inputUrlFormPopupCard.name]
+    const object = false    
+    section.addItem(object, dataCards)          
 }})
 
 const userInfo = new UserInfo({
@@ -68,9 +80,8 @@ const userInfo = new UserInfo({
 })
 
 const openPopupEditProfile = () => {  
-  formPopupEditProfile.reset();
-    
-  userInfo.getUserInfo(inputNameFormPopupProfile, inputSubnameFormPopupProfile);
+  formPopupEditProfile.reset();    
+  popupEditProfile.setInputValues(userInfo.getUserInfo())
   popupEditProfile.open();  
 }
 
@@ -88,5 +99,5 @@ buttonOpenPopupAddCard.addEventListener("click", openPopupAddCard);
 enableValidation(formPopupEditProfile);
 enableValidation(formPopupAddCard);
 
-section.addItem()
+section.render()
 

@@ -1,7 +1,6 @@
 {
   "name": "mesto",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -26,5 +25,14 @@
   },
   "dependencies": {
     "core-js": "^3.32.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/dedhoce/mesto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dedhoce/mesto/issues"
+  },
+  "homepage": "https://github.com/dedhoce/mesto#readme",
+  "description": ""
 }
