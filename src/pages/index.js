@@ -1,11 +1,7 @@
 import '../page/index.css';
 import { 
-   buttonOpenPopupProfileEdit,
-   inputNameFormPopupProfile,
-   inputSubnameFormPopupProfile,
-   formPopupEditProfile,
-   inputTitleFormPopupCard,
-   inputUrlFormPopupCard,
+   buttonOpenPopupProfileEdit,   
+   formPopupEditProfile,   
    buttonOpenPopupAddCard, 
    formPopupAddCard,
    captionPopupZoomImage,
@@ -52,25 +48,22 @@ const enableValidation = (form) => {
 const popupEditProfile = new PopupWithForm({
   popupSelector : '.popup_edit_profile', 
   submit: (data) => {
-    console.log(data[inputNameFormPopupProfile.name])
-    console.log(data[inputSubnameFormPopupProfile.name])
-    const dataUserInfo = {}
-    dataUserInfo.name = data[inputNameFormPopupProfile.name]
-    dataUserInfo.aboutMyself = data[inputSubnameFormPopupProfile.name]    
-    userInfo.setUserInfo(dataUserInfo)    
+    console.log(data.get('name'));    
+    const dataUserInfo = {};
+    dataUserInfo.name = data.get('name');
+    dataUserInfo.aboutMyself = data.get('subname');  
+    userInfo.setUserInfo(dataUserInfo);    
   }  
 })
 
 const popupAddCard = new PopupWithForm({
   popupSelector : '.popup_add_cards', 
-  submit: (data) => {
-    console.log(data[inputTitleFormPopupCard.name])
-    console.log(data[inputUrlFormPopupCard.name])
-    const dataCards = {}
+  submit: (data) => {    
+    const dataCards = {};
     dataCards.templateSelector = "#elements-item-template";
-    dataCards.text = data[inputTitleFormPopupCard.name]
-    dataCards.url = data[inputUrlFormPopupCard.name]
-    const object = false    
+    dataCards.text = data.get('name');
+    dataCards.url = data.get('url');
+    const object = false;  
     section.addItem(object, dataCards)          
 }})
 
