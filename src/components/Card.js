@@ -5,7 +5,7 @@ export class Card {
     this._template = document
       .querySelector(data.templateSelector)
       .content;
-    this._text = data.text;
+    this._name = data.name;
     this._url = data.url;    
     this._openPopupZoomImage = handleCardClick;    
   }
@@ -22,8 +22,8 @@ export class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
-    this._element.querySelector(".element__title").textContent = this._text;
-    this._element.querySelector(".element__mask-group").alt = this._text;
+    this._element.querySelector(".element__title").textContent = this._name;
+    this._element.querySelector(".element__mask-group").alt = this._name;
     this._element.querySelector(".element__mask-group").src = this._url;
 
     return this._element

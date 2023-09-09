@@ -11,16 +11,15 @@ export default class Section {
         itemsForCard.templateSelector = "#elements-item-template";
         this._items.forEach((item) => {
             itemsForCard.text = item.name;
-            itemsForCard.url = item.link;
-            const object = true                                   
-            this.addItem(object, this._renderer(itemsForCard))           
+            itemsForCard.url = item.link;                                              
+            this.addItem(true, this._renderer(itemsForCard))           
         })                
     }    
 
-    addItem(object, data) {                                                      
-        if(object) {                                  
+    addItem(flag, data) {                                                      
+        if(flag) {                                  
             this._container.append(data)
-        } else if(!object) {
+        } else if(!flag) {
             this._container.prepend(this._renderer(data))
         }
     }

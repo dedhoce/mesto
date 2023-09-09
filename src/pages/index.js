@@ -28,7 +28,7 @@ const section = new Section({
   items: initialCards,
   renderer: (data) => {    
     const url = data.url;
-    const text = data.text;
+    const text = data.name;
     const card = new Card(data, () => {                         
       popupWithImage.open(url, text)
       popupWithImage.setEventListener()                        
@@ -47,24 +47,17 @@ const enableValidation = (form) => {
 
 const popupEditProfile = new PopupWithForm({
   popupSelector : '.popup_edit_profile', 
-  submit: (data) => {
-    console.log(data.get('name'));    
-    const dataUserInfo = {};
-    dataUserInfo.name = data.get('name');
-    dataUserInfo.aboutMyself = data.get('subname');  
-    userInfo.setUserInfo(dataUserInfo);    
+  submit: (data) => {      
+    userInfo.setUserInfo(data);    
   }  
 })
 
 const popupAddCard = new PopupWithForm({
   popupSelector : '.popup_add_cards', 
-  submit: (data) => {    
-    const dataCards = {};
-    dataCards.templateSelector = "#elements-item-template";
-    dataCards.text = data.get('name');
-    dataCards.url = data.get('url');
+  submit: (data) => {   
+    data.templateSelector = "#elements-item-template";        
     const object = false;  
-    section.addItem(object, dataCards)          
+    section.addItem(object, data)          
 }})
 
 const userInfo = new UserInfo({
