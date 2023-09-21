@@ -42,3 +42,10 @@
 @import url(../blocks/popup/__text-error/_active/popup__text-error_active.css);
 @import url(../blocks/popup/__form-field/popup__form-field.css);
 @import url(../blocks/popup/__text/_type/popup__text_type_error.css);
+@import url(../blocks/element/__like/element__like.css);
+@import url(../blocks/element/__like-quantity/element__like-quantity.css);
+@import url(../blocks/profile/__edit-avatar/profile__edit-avatar.css);
+@import url(../blocks/profile/__avatar-edit-button/profile__avatar-edit-button.css);
+@import url(../blocks/popup/__form/_size/popup__form_size_oneInput.css);
+@import url(../blocks/popup/__form/_size/popup__form_size_zeroInput.css);
+@import url(../blocks/popup/__title/_size/popup__title_size_zeroInput.css)
