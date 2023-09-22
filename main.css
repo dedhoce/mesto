@@ -45,7 +45,7 @@
 .element__like{display:flex;flex-direction:column;gap:3px;justify-content:center;width:22px}
 .element__like-quantity{color:#000;font-family:Inter,sans-serif,Arial;font-size:13px;font-weight:400;line-height:13px;margin:0;text-align:center}
 .profile__edit-avatar{cursor:pointer;margin:0;padding:0;position:relative}.profile__edit-avatar:hover .profile__avatar{opacity:.4;transition:opacity .5s ease-out}.profile__edit-avatar:hover .profile__avatar-edit-button{opacity:1}
-.profile__avatar-edit-button{background-color:transparent;background-image:url(a086f758840ae814ecde.svg);border:none;cursor:pointer;height:26px;margin:0;opacity:0;padding:0;position:absolute;right:47px;top:47px;transition:opacity .5s ease;width:26px;z-index:3}
+.profile__avatar-edit-button{background-color:transparent;background-image:url(ae1a976ddb506239e9f0.svg);border:none;cursor:pointer;height:26px;margin:0;opacity:0;padding:0;position:absolute;right:47px;top:47px;transition:opacity .5s ease;width:26px;z-index:3}
 .popup__form_size_oneInput{min-height:272px}
 .popup__form_size_zeroInput{min-height:0}
 .popup__title_size_zeroInput{margin:34px 34px 38px}
