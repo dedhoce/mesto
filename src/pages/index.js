@@ -7,9 +7,7 @@ import {
    captionPopupZoomImage,
    imagePopupZoomImage,
    buttonOpenPopupAvatarEdit,
-   formPopupAvatarEdit,
-   popupConfirmationDeleteCard,
-   popupFormConfirmation
+   formPopupAvatarEdit   
   } from '../utils/constants.js';
 
 import { validationConfig } from '../utils/constants.js';
@@ -62,74 +60,48 @@ const cardsSection = new Section({
       () => {         
         const handleDeleteCard = () => {
           popupConfirmation.setSubmitButtonText('Удаление...')
-          api.deleteCard(idCard)
-          .then((res) => {       
-            if(res.ok) {              
-              card.deleteCard()                             
-              popupConfirmation.close()
-              return res.json();
-            } else {
-              console.log(`Ошибка ${res.status}`)
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-          })
+          api.deleteCard(idCard)          
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
           })
-          .finally(() => popupConfirmation.setSubmitButtonText('Да'))          
-        }
-      
+          .finally(() => {
+            card.deleteCard();                            
+            popupConfirmation.close();
+            popupConfirmation.setSubmitButtonText('Да')
+          })          
+        }      
         popupConfirmation.setCallback(handleDeleteCard);
         popupConfirmation.open()               
       },
       userInfo.getUserId(),
-      (trueContains, likeElement, likeIcon) => {               
+      (trueContains, likeIcon) => {               
         if (!trueContains) {          
-          api.likeCard(idCard)
-          .then(res => {       
-            if(res.ok) {
-              return res.json();
-            } else {
-              console.log(`Ошибка ${res.status}`)
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-          })
+          api.likeCard(idCard)          
           .then(res => {
-            card.updateLikes(likeElement, res.likes.length)           
+            card.updateLikes(res.likes.length)           
             likeIcon.classList.add("element__group_status_active")
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
           })         
         } else {
-          api.deleteLikeCard(idCard)
-          .then(res => {       
-            if(res.ok) {
-              return res.json();
-            } else {
-              console.log(`Ошибка ${res.status}`)
-            }
-            return Promise.reject(`Ошибка: ${res.status}`);
-          })
+          api.deleteLikeCard(idCard)          
           .then(res => {
-            card.updateLikes(likeElement, res.likes.length)
+            card.updateLikes(res.likes.length)
             likeIcon.classList.remove("element__group_status_active")
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
           })
         }
-      } 
-          
+      }         
     )
-      const cardElement = card.generateCard();
+    const cardElement = card.generateCard();
         
-      return cardElement    
+    return cardElement    
   },
   containerSelector: ".elements"
 })
-
-
 
 const enableValidation = (form) => {
   const formValidator = new FormValidator(form, validationConfig);
@@ -138,18 +110,9 @@ const enableValidation = (form) => {
 
 const popupEditProfile = new PopupWithForm({
   popupSelector : '.popup_edit_profile', 
-  submit: (data) => {
+  handleSubmit: (data) => {
     popupEditProfile.setSubmitButtonText('Сохранение...')
-    api.pushUserInfo(data)
-      .then((res) => {       
-        if(res.ok) {
-          
-          return res.json();
-        } else {
-          console.log(`Ошибка ${res.status}`)
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    api.pushUserInfo(data)      
       .then((res) => {
         const data = {}
         data.name = res.name;
@@ -167,57 +130,37 @@ const popupEditProfile = new PopupWithForm({
 
 const popupAddCard = new PopupWithForm({
   popupSelector : '.popup_add_cards', 
-  submit: (data) => {
+  handleSubmit: (data) => {
     popupAddCard.setSubmitButtonText('Создание...')
-    api.pushInfoCreateCard(data)
-      .then((res) => {
-        if(res.ok){          
-          return res.json()
-        } else {
-          console.log(`Ошибка ${res.status}`)
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((res) => {
-        //console.log(res)
+    api.pushInfoCreateCard(data)      
+      .then((res) => {       
         data.templateSelector = "#elements-item-template";
         data.name = res.name;
         data.url = res.link;
         data.idCard = res._id; 
-        data.ownerId = res.owner._id              
-        const isAppendMethod = false;
-        //console.log(data)
-        cardsSection.addItem(isAppendMethod, data)
+        data.ownerId = res.owner._id      
+        cardsSection.prependItem(data)
         popupAddCard.close() 
       })
       .catch((err) => {
         console.log(err); 
       })
-      .finally(() => popupAddCard.setSubmitButtonText('Создать'))   
-             
+      .finally(() => popupAddCard.setSubmitButtonText('Создать'))            
 }})
 
 const popupAvatarEdit = new PopupWithForm({
   popupSelector : '.popup_avatar_edit', 
-  submit: (data) => {
+  handleSubmit: (data) => {
     popupAvatarEdit.setSubmitButtonText('Сохранение...')       
-    api.pushAvatar(data)
-      .then((res) => {
-        if(res.ok) {
-          removeDownloadSimbolPopup(document.querySelector('.popup_avatar_edit'))
-          userInfo.setAvatarImage(data)
-          popupAvatarEdit.close()
-        } else {
-          console.log(`Ошибка ${res.status}`)
-          console.log(res)
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    api.pushAvatar(data)      
       .catch((err) => {
         console.log(err); 
       })
-      .finally(() => popupAvatarEdit.setSubmitButtonText('Сохранить'))   
-             
+      .finally(() => {
+        userInfo.setAvatarImage(data);
+        popupAvatarEdit.close();
+        popupAvatarEdit.setSubmitButtonText('Сохранить')
+      })             
 }})
 
 
@@ -255,9 +198,24 @@ enableValidation(formPopupAddCard);
 enableValidation(formPopupAvatarEdit);
 
 
-Promise.all(
-  api.getInitialCards()
-    .then((initialCards) => {                
+Promise.all([
+  api.getInitialCards(),
+  api.getUserInfo()    
+])
+  .then(([cards, user]) => {        
+     return {
+      initialCards: cards,
+      userInformation: user
+    }
+  })
+  .then(({initialCards, userInformation}) => {
+      const data = {}
+      data.name = userInformation.name;
+      data.subname = userInformation.about;
+      data.avatar = userInformation.avatar
+      data.idProfile = userInformation._id        
+      userInfo.setUserInfo(data)
+      userInfo.setAvatarImage(data)    
       const itemsForCard = {};
       itemsForCard.templateSelector = "#elements-item-template";
       initialCards.forEach((card) => {         
@@ -266,37 +224,10 @@ Promise.all(
           itemsForCard.ownerId = card.owner._id     
           itemsForCard.name = card.name;
           itemsForCard.url = card.link;
-          itemsForCard.like = card.likes.length; 
-          const isAppendMethod = true                                               
-          cardsSection.addItem(isAppendMethod, itemsForCard)           
-      })  
-    })
-    .catch((err) => {
-      console.log(err); 
-    }),
-
-  api.getUserInfo()
-    .then((info) => {    
-      const data = {}
-      data.name = info.name;
-      data.subname = info.about;
-      data.avatar = info.avatar
-      data.idProfile = info._id
-      userInfo.setUserInfo(data)
-      userInfo.setAvatarImage(data)
-    })
-    .catch((err) => {
-      console.log(err); 
-    })
-)
-  .then(
-    (value) => {
-      console.log(value);
-    },
-    (reason) => {
-      console.log(reason);
-    },
-  );
-
-
-
+          itemsForCard.likesCount = card.likes.length;                                                         
+          cardsSection.appendItem(itemsForCard)
+      })                  
+  })
+  .catch((err) => {
+    console.log(err); 
+  }) 

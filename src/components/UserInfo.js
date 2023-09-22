@@ -9,14 +9,14 @@ export default class UserInfo {
         return {
             name: this._name.textContent,
             subname: this._aboutMyself.textContent,
-            avatar: this._avatar.src 
+            avatar: this._avatar.src            
         }
     }
 
-    setUserInfo(data) {        
+    setUserInfo(data) {               
         this._name.textContent = data.name;
-        this._aboutMyself.textContent = data.subname;
-        this._name.id = data.idProfile            
+        this._aboutMyself.textContent = data.subname;        
+        this._name.id = data.idProfile                    
     }
     
 
@@ -24,7 +24,7 @@ export default class UserInfo {
         this._avatar.src = data.avatar
     }
 
-    getUserId() {
+    getUserId() {                
         return this._name.id
     }
 }

@@ -15,10 +15,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers      
     })
-    .then(res => {      
-        this._getResponseData(res)
-        throw new Error('Что-то пошло не так');
-    })        
+    .then(res => this._getResponseData(res))            
   }  
 
   pushUserInfo(newUserInfo) {    
@@ -29,7 +26,8 @@ export default class Api {
         name: newUserInfo.name,
         about: newUserInfo.subname
       })
-    }); 
+    })
+    .then(res => this._getResponseData(res))
   }
 
   pushAvatar(newLinkAvatar) {        
@@ -39,24 +37,23 @@ export default class Api {
       body: JSON.stringify({
         avatar: newLinkAvatar.avatar        
       })
-    }); 
+    })
+    .then(res => this._getResponseData(res)) 
   }
 
   getInitialCards() {    
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers      
     })
-    .then(res => {      
-        this._getResponseData(res)
-        throw new Error('Что-то пошло не так');
-    })        
+    .then(res => this._getResponseData(res))            
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers      
-    });
+    })
+    .then(res => this._getResponseData(res))
   }
 
   pushInfoCreateCard(data) {
@@ -68,20 +65,23 @@ export default class Api {
         link: data.url         
       })
     })
+    .then(res => this._getResponseData(res))
   }
 
   likeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers      
-    });  
+    })
+    .then(res => this._getResponseData(res))  
   }
 
   deleteLikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers      
-    });
+    })
+    .then(res => this._getResponseData(res))
   }
 
   // другие методы работы с API

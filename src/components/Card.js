@@ -1,6 +1,6 @@
 export class Card {
   
-  constructor(data, handleCardClick, handleTrashClick, idProfile, renderLikeCard) {        
+  constructor(data, handleCardClick, handleTrashClick, idProfile, renderLikeCard) {                
     this._template = document
       .querySelector(data.templateSelector)
       .content;
@@ -11,15 +11,15 @@ export class Card {
     this._openPopupZoomImage = handleCardClick;
     this._openPopupConfirmation = handleTrashClick;
     this._idProfile = idProfile;    
-    this.renderLikeCard = renderLikeCard;
-    this._likesList = data.likesList    
+    this._renderLikeCard = renderLikeCard;
+    this._likesList = data.likesList       
   }
 
   _getTemplate() {
     const cardElement = this._template
         .querySelector('.element')
         .cloneNode(true);
-
+    
     if(this._idProfile !== this._ownerId) {  
       cardElement.querySelector('.element__trash').remove();        
     }
@@ -27,25 +27,24 @@ export class Card {
     return cardElement;     
   }
 
-  generateCard() {
-    const cardImage = this._element.querySelector(".element__mask-group");
+  generateCard() {    
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector(".element__mask-group");
     this._likelikesCountElement = this._element.querySelector(".element__like-quantity")
     this._likeIcon = this._element.querySelector(".element__group")
-    this._setEventListeners();   
-    this._likelikesCountElement.textContent = this._like;
-    
-    const isLiked = this._likesList.some(profile => {         
-      return profile._id === this._idProfile      
-    });
-
-    if (isLiked) {
-        this._element.querySelector(".element__group").classList.add("element__group_status_active");
-    }    
-        
+    this._setEventListeners();
+    if (this._likesList)  {
+      this._likelikesCountElement.textContent = this._likesCount;    
+      const isLiked = this._likesList.some(profile => {                 
+        return profile._id === this._idProfile      
+      });      
+      if (isLiked) {
+        this._likeIcon.classList.add("element__group_status_active");
+      }
+    };       
     this._element.querySelector(".element__title").textContent = this._name;
-    cardImage.alt = this._name;
-    cardImage.src = this._url;
+    this._cardImage.alt = this._name;
+    this._cardImage.src = this._url;
 
     return this._element
   }  
@@ -58,19 +57,18 @@ export class Card {
       })
     }
 
-    this._element.querySelector(".element__group").addEventListener("click", () => {
+    this._likeIcon.addEventListener("click", () => {
       this._handleLikeClick();
     })
 
-    this._element.querySelector(".element__mask-group").addEventListener("click", () => {     
+    this._cardImage.addEventListener("click", () => {     
       this._openPopupZoomImage();
     })    
   }  
 
   _handleLikeClick() {        
-    this.renderLikeCard(
-      this._likeIcon.classList.contains('element__group_status_active'),
-      this._like,
+    this._renderLikeCard(
+      this._likeIcon.classList.contains('element__group_status_active'),      
       this._likeIcon)   
   }
 
@@ -79,8 +77,8 @@ export class Card {
     this._element = null;
   }
 
-  updateLikes(likeElement, cardLikes) {
-    likeElement.textContent = cardLikes
+  updateLikes(cardLikes) {    
+    this._likelikesCountElement.textContent = cardLikes
   }
 
 }
