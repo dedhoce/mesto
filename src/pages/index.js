@@ -60,13 +60,16 @@ const cardsSection = new Section({
       () => {         
         const handleDeleteCard = () => {
           popupConfirmation.setSubmitButtonText('Удаление...')
-          api.deleteCard(idCard)          
+          api.deleteCard(idCard)
+          .then((res) => {
+            console.log(res)
+            card.deleteCard();                            
+            popupConfirmation.close();
+          })          
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
           })
-          .finally(() => {
-            card.deleteCard();                            
-            popupConfirmation.close();
+          .finally(() => {            
             popupConfirmation.setSubmitButtonText('Да')
           })          
         }      
@@ -74,12 +77,11 @@ const cardsSection = new Section({
         popupConfirmation.open()               
       },
       userInfo.getUserId(),
-      (trueContains, likeIcon) => {               
+      (trueContains) => {               
         if (!trueContains) {          
           api.likeCard(idCard)          
           .then(res => {
-            card.updateLikes(res.likes.length)           
-            likeIcon.classList.add("element__group_status_active")
+            card.updateLikes(trueContains, res.likes.length)           
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
@@ -87,8 +89,7 @@ const cardsSection = new Section({
         } else {
           api.deleteLikeCard(idCard)          
           .then(res => {
-            card.updateLikes(res.likes.length)
-            likeIcon.classList.remove("element__group_status_active")
+            card.updateLikes(trueContains, res.likes.length)            
           })
           .catch((err) => {
             console.log(err); // выведем ошибку в консоль
@@ -152,13 +153,17 @@ const popupAvatarEdit = new PopupWithForm({
   popupSelector : '.popup_avatar_edit', 
   handleSubmit: (data) => {
     popupAvatarEdit.setSubmitButtonText('Сохранение...')       
-    api.pushAvatar(data)      
+    api.pushAvatar(data)
+      .then((res) => {
+        console.log(res)
+        userInfo.setAvatarImage(data);
+        popupAvatarEdit.close();
+      })      
       .catch((err) => {
         console.log(err); 
       })
       .finally(() => {
-        userInfo.setAvatarImage(data);
-        popupAvatarEdit.close();
+        
         popupAvatarEdit.setSubmitButtonText('Сохранить')
       })             
 }})

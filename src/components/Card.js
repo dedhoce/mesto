@@ -18,7 +18,7 @@ export class Card {
   _getTemplate() {
     const cardElement = this._template
         .querySelector('.element')
-        .cloneNode(true);
+        .cloneNode(true);   
     
     if(this._idProfile !== this._ownerId) {  
       cardElement.querySelector('.element__trash').remove();        
@@ -30,11 +30,11 @@ export class Card {
   generateCard() {    
     this._element = this._getTemplate();
     this._cardImage = this._element.querySelector(".element__mask-group");
-    this._likelikesCountElement = this._element.querySelector(".element__like-quantity")
+    this._likesCountElement = this._element.querySelector(".element__like-quantity")
     this._likeIcon = this._element.querySelector(".element__group")
     this._setEventListeners();
     if (this._likesList)  {
-      this._likelikesCountElement.textContent = this._likesCount;    
+      this._likesCountElement.textContent = this._likesCount;    
       const isLiked = this._likesList.some(profile => {                 
         return profile._id === this._idProfile      
       });      
@@ -69,7 +69,7 @@ export class Card {
   _handleLikeClick() {        
     this._renderLikeCard(
       this._likeIcon.classList.contains('element__group_status_active'),      
-      this._likeIcon)   
+    )   
   }
 
   deleteCard() {    
@@ -77,8 +77,14 @@ export class Card {
     this._element = null;
   }
 
-  updateLikes(cardLikes) {    
-    this._likelikesCountElement.textContent = cardLikes
+  updateLikes(trueContains, cardLikes) {    
+    this._likesCountElement.textContent = cardLikes
+    if(!trueContains) {
+      this._likeIcon.classList.add("element__group_status_active")
+    } else {
+      this._likeIcon.classList.remove("element__group_status_active")
+    }
+    
   }
 
 }
